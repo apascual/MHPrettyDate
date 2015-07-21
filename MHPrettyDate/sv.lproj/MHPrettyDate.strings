@@ -27,31 +27,31 @@
 "Now" = "Nu";
 
 /* No comment provided by engineer. */
-" days ago" = " dagen geleden";
+" days" = " dagar";
 
 /* No comment provided by engineer. */
-" hour ago" = " uur geleden";
+" hour" = " timme";
 
 /* No comment provided by engineer. */
-" hours ago" = " uren geleden";
+" hours" = " timmar";
 
 /* No comment provided by engineer. */
-" minute ago" = " minuut geleden";
+" minute" = " minut";
 
 /* No comment provided by engineer. */
-" minutes ago" = " minuten geleden";
+" minutes" = " minuter";
 
 /* This value is used in a DateFormat, the single quotes are important. */
-"'Today'" = "'Vandaag'";
+"'Today'" = "'Idag'";
 
 /* This value is used in a DateFormat, the single quotes are important. */
-"'Tomorrow'" = "'Morgen'";
+"'Tomorrow'" = "'Imorgon'";
 
 /* This value is used in a DateFormat, the single quotes are important. */
-"'Yesterday'" = "'Gisteren'";
+"'Yesterday'" = "'Igår'";
 
 /* No comment provided by engineer. */
-"1 day ago" = "1 dag geleden";
+"1 day" = "1 dag";
 
 /* No comment provided by engineer. */
 "1d" = "1d";
@@ -60,9 +60,11 @@
 "d" = "d";
 
 /* No comment provided by engineer. */
-"h" = "u";
+"h" = "t";
 
 /* No comment provided by engineer. */
 "m" = "m";
 
+"ago" = "sen";
 
+"In" = "I";

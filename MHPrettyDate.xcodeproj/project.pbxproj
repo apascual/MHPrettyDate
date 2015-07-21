@@ -53,7 +53,6 @@
 
 /* Begin PBXFileReference section */
 		CCEAF12016F328480049549E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MHPrettyDate.strings; sourceTree = "<group>"; };
-		CCEAF12216F329270049549E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/MHPrettyDate.strings; sourceTree = "<group>"; };
 		D0F36A781799BE2C00F76C70 /* NSDate+Mock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Mock.m"; sourceTree = "<group>"; };
 		D0F36A791799BE2D00F76C70 /* NSDate+Mock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Mock.h"; sourceTree = "<group>"; };
 		E93DEE6D161AD591005B9E19 /* MHPrettyDateExampleApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MHPrettyDateExampleApp.xcodeproj; path = MHPrettyDateExampleApp/MHPrettyDateExampleApp.xcodeproj; sourceTree = "<group>"; };
@@ -69,6 +68,7 @@
 		E9DC161715FBDF2600C594E6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E9DC161915FBDF2600C594E6 /* MHPrettyDateTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHPrettyDateTests.h; sourceTree = "<group>"; };
 		E9DC161A15FBDF2600C594E6 /* MHPrettyDateTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MHPrettyDateTests.m; sourceTree = "<group>"; };
+		E9E0B4AC1B5EE7FD0067A7DB /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/MHPrettyDate.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,7 +210,7 @@
 			name = MHPrettyDateTests;
 			productName = MHPrettyDateTests;
 			productReference = E9DC160A15FBDF2600C594E6 /* MHPrettyDateTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productType = "com.apple.product-type.bundle.ocunit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -227,7 +227,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				nl,
+				sv,
 			);
 			mainGroup = E9DC15EE15FBDF2600C594E6;
 			productRefGroup = E9DC15FA15FBDF2600C594E6 /* Products */;
@@ -325,7 +325,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				CCEAF12016F328480049549E /* en */,
-				CCEAF12216F329270049549E /* nl */,
+				E9E0B4AC1B5EE7FD0067A7DB /* sv */,
 			);
 			name = MHPrettyDate.strings;
 			sourceTree = "<group>";
