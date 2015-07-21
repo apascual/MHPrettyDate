@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MHPrettyDate"
-  s.version      = "1.1.1"
+  s.version      = "1.1.2"
   s.summary      = "An iOS framework that provides a simple mechanism to get  \"Pretty Dates\" (\"Yesterday\", \"Today\", etc.) from NSDate objects."
   s.homepage     = "https://github.com/bobjustbob/MHPrettyDate"
   s.license      = 'MIT'
