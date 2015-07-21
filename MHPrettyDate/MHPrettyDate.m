@@ -245,12 +245,12 @@
             // today show only time
             if ([MHPrettyDate isToday:date])
             {
-                dateString = @"h:mm a";
+                dateString = @"HH:mm";
             }
             else
             {
                 // otherwise show date string and time
-                dateString = [NSString stringWithFormat:@"%@ h:mm a", dateString];
+                dateString = [NSString stringWithFormat:@"%@ HH:mm", dateString];
             }
         }
         
@@ -260,7 +260,7 @@
             // today show only time
             if ([MHPrettyDate isToday:date])
             {
-                dateString = @"h:mm a";
+                dateString = @"HH:mm";
             }
         }
         
