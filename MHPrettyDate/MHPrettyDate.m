@@ -31,6 +31,7 @@
 @property (strong, nonatomic)   NSDate*            today;
 @property (readonly, nonatomic) NSDate*            yesterday;
 @property (readonly, nonatomic) NSDate*            tomorrow;
+@property (readonly, nonatomic) NSDate*            inThreeDays;
 @property (readonly, nonatomic) NSDate*            weekAgo;
 @property (readonly, nonatomic) NSCalendar*        calendar;
 @property (strong, nonatomic)   NSDateFormatter*   dateFormatter;
@@ -50,6 +51,7 @@
 @synthesize yesterday      = _yesterday;
 @synthesize tomorrow       = _tomorrow;
 @synthesize weekAgo        = _weekAgo;
+@synthesize inThreeDays = _inThreeDays;
 
 #pragma mark - get singleton
 //
@@ -274,7 +276,11 @@
     }
     else
     {
-        return [NSDateFormatter localizedStringFromDate:date dateStyle:dateStyle timeStyle:NSDateFormatterNoStyle];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+        dateFormatter.locale = [NSLocale currentLocale];
+        [dateFormatter setDateFormat:@"EEE, dd MMM"];
+        return [dateFormatter stringFromDate:date];
+        //return [NSDateFormatter localizedStringFromDate:date dateStyle:dateStyle timeStyle:NSDateFormatterNoStyle];
     }
 }
 
@@ -345,6 +351,18 @@
     return _tomorrow;
 }
 
+-(NSDate*) inThreeDays
+{
+    [self sanitize];
+    if (!_inThreeDays)
+    {
+        NSDateComponents* comps = [[NSDateComponents alloc] init];
+        [comps setDay: 3];
+        _inThreeDays = [self.calendar dateByAddingComponents:comps toDate:self.today options:0];
+    }
+    return _inThreeDays;
+}
+
 // calendar
 -(NSCalendar*) calendar
 {
@@ -384,7 +402,8 @@
 
 +(BOOL) willMakePretty:(NSDate *)date
 {
-    return ([MHPrettyDate isTomorrow:date] || [MHPrettyDate isWithinWeek:date]);
+//    return ([MHPrettyDate isTomorrow:date] || [MHPrettyDate isWithinWeek:date]);
+    return ([MHPrettyDate isYesterday:date] || [MHPrettyDate isToday:date] || [MHPrettyDate isTomorrow:date] || [MHPrettyDate isWithinThreeNextDays:date]);
 }
 
 #pragma mark - date relative
@@ -444,6 +463,30 @@
     
     return isWithinWeek;
 }
+
++(BOOL) isWithinThreeNextDays:(NSDate*) date;
+{
+    MHPrettyDate* prettyDate   = [MHPrettyDate sharedInstance];
+    NSDate*       today        = prettyDate.today;
+    NSDate*       inThreeDays  = prettyDate.inThreeDays;
+    NSDate*       testDate     = [prettyDate normalizeDate:date];
+    BOOL          isWithinThreeDays = NO;
+    
+    if ([prettyDate isSameDay:testDate as:inThreeDays] || [prettyDate isSameDay:testDate as:today])
+    {
+        isWithinThreeDays = YES;
+    }
+    else
+    {
+        NSDate* earlierDate = [testDate earlierDate: inThreeDays];
+        NSDate* laterDate   = [testDate laterDate:   today];
+        
+        isWithinThreeDays = ([testDate isEqualToDate:earlierDate] && [testDate isEqualToDate:laterDate]);
+    }
+    
+    return isWithinThreeDays;
+}
+
 
 #pragma mark - time relative
 
