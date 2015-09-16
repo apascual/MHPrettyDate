@@ -183,7 +183,7 @@
             post = (dateFormat == MHPrettyDateLongRelativeTime) ? NSLocalizedStringFromTable(@" minute", @"MHPrettyDate", nil) : NSLocalizedStringFromTable(@"m", @"MHPrettyDate", nil);
             dateString = [NSString stringWithFormat: @"%ld%@", (long)minutes, post];
         } else if (minutes != 0) {
-            minutes = minutes % 60;
+            if(minutes > 60) minutes = minutes % 60;
             post = (dateFormat == MHPrettyDateLongRelativeTime) ? NSLocalizedStringFromTable(@" minutes", @"MHPrettyDate", nil) : NSLocalizedStringFromTable(@"m", @"MHPrettyDate", nil);
             dateString = [NSString stringWithFormat: @"%ld%@", (long)minutes, post];
         }
