@@ -166,22 +166,30 @@
         dateString = NSLocalizedStringFromTable(@"Now", @"MHPrettyDate", nil);
     } else if([MHPrettyDate isWithin24Hours:date]) {
         MHPrettyDate *prettyDate = [MHPrettyDate sharedInstance];
-        if([MHPrettyDate isWithinHour:date])
-        {
-            // if within 60 minutes print minutes
-            NSInteger minutes = [prettyDate minutesFromNow:date];
-            if(minutes>=0) {
-                minutes++;
-            } else {
-                minutes = ABS(minutes);
-            }
-            NSString  *post;
-            
-            if (minutes == 1) post = (dateFormat == MHPrettyDateLongRelativeTime) ? NSLocalizedStringFromTable(@" minute", @"MHPrettyDate", nil) : NSLocalizedStringFromTable(@"m", @"MHPrettyDate", nil);
-            else post = (dateFormat == MHPrettyDateLongRelativeTime) ? NSLocalizedStringFromTable(@" minutes", @"MHPrettyDate", nil) : NSLocalizedStringFromTable(@"m", @"MHPrettyDate", nil);
+        
+        // if within 60 minutes print minutes
+        NSInteger minutes = [prettyDate minutesFromNow:date];
+        if(minutes>=0) {
+            minutes++;
+        } else {
+            minutes = ABS(minutes);
+        }
+        
+        dateString = @"";
+        
+        // Always add minutes
+        NSString  *post;
+        if (minutes == 1) {
+            post = (dateFormat == MHPrettyDateLongRelativeTime) ? NSLocalizedStringFromTable(@" minute", @"MHPrettyDate", nil) : NSLocalizedStringFromTable(@"m", @"MHPrettyDate", nil);
+            dateString = [NSString stringWithFormat: @"%ld%@", (long)minutes, post];
+        } else if (minutes != 0) {
+            minutes = minutes % 60;
+            post = (dateFormat == MHPrettyDateLongRelativeTime) ? NSLocalizedStringFromTable(@" minutes", @"MHPrettyDate", nil) : NSLocalizedStringFromTable(@"m", @"MHPrettyDate", nil);
             dateString = [NSString stringWithFormat: @"%ld%@", (long)minutes, post];
         }
-        else
+        
+        // Include hours
+        if(![MHPrettyDate isWithinHour:date])
         {
             // else print hours
             NSInteger hours = ABS([prettyDate hoursFromNow:date]);
@@ -189,7 +197,11 @@
             
             if (hours == 1) post = (dateFormat == MHPrettyDateLongRelativeTime) ? NSLocalizedStringFromTable(@" hour", @"MHPrettyDate", nil) : NSLocalizedStringFromTable(@"h", @"MHPrettyDate", nil);
             else post = (dateFormat == MHPrettyDateLongRelativeTime) ? NSLocalizedStringFromTable(@" hours", @"MHPrettyDate", nil) : NSLocalizedStringFromTable(@"h", @"MHPrettyDate", nil);
-            dateString = [NSString stringWithFormat: @"%ld%@", (long)hours, post];
+            NSString *hoursStr = [NSString stringWithFormat: @"%ld%@", (long)hours, post];
+            
+            if(dateString.length > 0) {
+                dateString = [hoursStr stringByAppendingString:[NSString stringWithFormat:@" %@", dateString]];
+            }
         }
         
         if([MHPrettyDate isFutureTime:date]) {
@@ -402,7 +414,7 @@
 
 +(BOOL) willMakePretty:(NSDate *)date
 {
-//    return ([MHPrettyDate isTomorrow:date] || [MHPrettyDate isWithinWeek:date]);
+    //    return ([MHPrettyDate isTomorrow:date] || [MHPrettyDate isWithinWeek:date]);
     return ([MHPrettyDate isYesterday:date] || [MHPrettyDate isToday:date] || [MHPrettyDate isTomorrow:date] || [MHPrettyDate isWithinThreeNextDays:date]);
 }
 
