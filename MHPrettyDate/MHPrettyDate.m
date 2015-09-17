@@ -167,47 +167,49 @@
     } else if([MHPrettyDate isWithin24Hours:date]) {
         MHPrettyDate *prettyDate = [MHPrettyDate sharedInstance];
         
-        // if within 60 minutes print minutes
-        NSInteger minutes = [prettyDate minutesFromNow:date];
-        if(minutes>=0) {
-            minutes++;
-        } else {
-            minutes = ABS(minutes);
-        }
-        
         dateString = @"";
+        NSString *minutesStr = @"";
+        NSString *hoursStr = @"";
         
-        // Always add minutes
+        // Minutes
         NSString  *post;
+        NSInteger minutes = ABS([prettyDate minutesFromNow:date]);
+        NSInteger hours = minutes / 60;
+        minutes = minutes % 60;
         if (minutes == 1) {
             post = (dateFormat == MHPrettyDateLongRelativeTime) ? NSLocalizedStringFromTable(@" minute", @"MHPrettyDate", nil) : NSLocalizedStringFromTable(@"m", @"MHPrettyDate", nil);
-            dateString = [NSString stringWithFormat: @"%ld%@", (long)minutes, post];
+            minutesStr = [NSString stringWithFormat: @"%ld%@", (long)minutes, post];
         } else if (minutes != 0) {
-            if(minutes > 60) minutes = minutes % 60;
             post = (dateFormat == MHPrettyDateLongRelativeTime) ? NSLocalizedStringFromTable(@" minutes", @"MHPrettyDate", nil) : NSLocalizedStringFromTable(@"m", @"MHPrettyDate", nil);
-            dateString = [NSString stringWithFormat: @"%ld%@", (long)minutes, post];
+            minutesStr = [NSString stringWithFormat: @"%ld%@", (long)minutes, post];
         }
         
-        // Include hours
-        if(![MHPrettyDate isWithinHour:date])
-        {
-            // else print hours
-            NSInteger hours = ABS([prettyDate hoursFromNow:date]);
-            NSString  *post;
-            
-            if (hours == 1) post = (dateFormat == MHPrettyDateLongRelativeTime) ? NSLocalizedStringFromTable(@" hour", @"MHPrettyDate", nil) : NSLocalizedStringFromTable(@"h", @"MHPrettyDate", nil);
-            else post = (dateFormat == MHPrettyDateLongRelativeTime) ? NSLocalizedStringFromTable(@" hours", @"MHPrettyDate", nil) : NSLocalizedStringFromTable(@"h", @"MHPrettyDate", nil);
-            NSString *hoursStr = [NSString stringWithFormat: @"%ld%@", (long)hours, post];
-            
-            if(dateString.length > 0) {
-                dateString = [hoursStr stringByAppendingString:[NSString stringWithFormat:@" %@", dateString]];
-            }
+        // Hours
+        //        NSInteger hours = ABS([prettyDate hoursFromNow:date]);
+        if (hours == 1) {
+            post = (dateFormat == MHPrettyDateLongRelativeTime) ? NSLocalizedStringFromTable(@" hour", @"MHPrettyDate", nil) : NSLocalizedStringFromTable(@"h", @"MHPrettyDate", nil);
+            hoursStr = [NSString stringWithFormat: @"%ld%@", (long)hours, post];
+        } else if (hours != 0) {
+            post = (dateFormat == MHPrettyDateLongRelativeTime) ? NSLocalizedStringFromTable(@" hours", @"MHPrettyDate", nil) : NSLocalizedStringFromTable(@"h", @"MHPrettyDate", nil);
+            hoursStr = [NSString stringWithFormat: @"%ld%@", (long)hours, post];
         }
         
-        if([MHPrettyDate isFutureTime:date]) {
-            dateString = [NSString stringWithFormat:@"%@ %@", NSLocalizedStringFromTable(@"In", @"MHPrettyDate", nil), dateString];
+        if(minutesStr.length > 0 && hoursStr.length > 0) {
+            dateString = [NSString stringWithFormat:@"%@ %@", hoursStr, minutesStr];
+        } else if (minutesStr.length > 0) {
+            dateString = minutesStr;
+        } else if (hoursStr.length > 0) {
+            dateString = hoursStr;
         } else {
-            dateString = [NSString stringWithFormat:@"%@ %@", dateString, NSLocalizedStringFromTable(@"ago", @"MHPrettyDate", nil)];
+            dateString = NSLocalizedStringFromTable(@"Now", @"MHPrettyDate", nil);
+        }
+        
+        if(minutesStr.length > 0 || hoursStr.length > 0) {
+            if([MHPrettyDate isFutureTime:date]) {
+                dateString = [NSString stringWithFormat:@"%@ %@", NSLocalizedStringFromTable(@"In", @"MHPrettyDate", nil), dateString];
+            } else {
+                dateString = [NSString stringWithFormat:@"%@ %@", dateString, NSLocalizedStringFromTable(@"ago", @"MHPrettyDate", nil)];
+            }
         }
     }
     // Date
